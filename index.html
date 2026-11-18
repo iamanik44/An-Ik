@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anik • Personal Portfolio</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+        .dark .glass { background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+        .blob-bg { filter: blur(80px); opacity: 0.5; z-index: -1; animation: floatBlob 10s ease-in-out infinite alternate; }
+        @keyframes floatBlob {
+            0% { transform: translateY(0px) scale(1); }
+            100% { transform: translateY(-30px) scale(1.1); }
+        }
+        .gradient-text { background-clip: text; -webkit-background-clip: text; color: transparent; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 font-sans transition-colors duration-300 relative overflow-x-hidden" id="bodyTheme">
+
+    <!-- Animated Mesh Background Blobs -->
+    <div id="blob1" class="absolute top-10 left-10 w-96 h-96 bg-purple-500 rounded-full blob-bg pointer-events-none"></div>
+    <div id="blob2" class="absolute top-1/2 right-10 w-96 h-96 bg-indigo-500 rounded-full blob-bg pointer-events-none" style="animation-delay: 3s;"></div>
+    <div id="blob3" class="absolute bottom-10 left-1/3 w-96 h-96 bg-pink-500 rounded-full blob-bg pointer-events-none" style="animation-delay: 6s;"></div>
+
+    <!-- NAVBAR -->
+    <nav class="fixed top-0 left-0 right-0 z-50 glass border-b border-slate-200/50 dark:border-slate-800/50 transition-colors">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <a href="#home" class="flex items-center space-x-3 group">
+                <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-indigo-600 via-purple-600 to-pink-500 p-0.5 shadow-lg shadow-indigo-500/30 group-hover:scale-105 transition-transform">
+                    <div class="w-full h-full bg-slate-900 rounded-[14px] overflow-hidden flex items-center justify-center">
+                        <img src="./ANIK.png" alt="Anik" class="w-full h-full object-cover object-top" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80'">
+                    </div>
+                </div>
+                <span class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 gradient-text">Anik Only</span>
+            </a>
+
+            <div class="hidden md:flex items-center space-x-8 font-semibold text-sm">
+                <a href="#home" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Home</a>
+                <a href="#about" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">About Me</a>
+                <a href="#activities" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Activities</a>
+                <a href="#achievements" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Achievements</a>
+                <a href="#contact" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Contact</a>
+            </div>
+
+            <div class="flex items-center space-x-3">
+                <!-- Theme Palette Switcher Button -->
+                <button onclick="cycleTheme()" id="themeSwitcherBtn" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-indigo-50 dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-slate-800 shadow-sm hover:shadow transition-all flex items-center space-x-1.5" title="Switch Color Theme">
+                    <i class="fa-solid fa-palette"></i>
+                    <span id="themeName">Cyber Aurora</span>
+                </button>
+                <a href="#contact" class="hidden sm:inline-flex items-center justify-center px-5 py-2.5 rounded-xl font-bold text-sm text-white bg-gradient-to-r from-indigo-600 to-purple-600 shadow-lg shadow-indigo-500/25 hover:shadow-indigo-500/40 hover:scale-[1.02] active:scale-[0.98] transition-all">
+                    Connect
+                </a>
+                <button onclick="toggleMobileMenu()" class="md:hidden p-2.5 rounded-xl bg-slate-200/50 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                    <i class="fa-solid fa-bars text-lg"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden px-4 pt-2 pb-5 space-y-3 glass border-b border-slate-200/50 dark:border-slate-800/50">
+            <a href="#home" onclick="toggleMobileMenu()" class="block font-semibold py-2 px-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">Home</a>
+            <a href="#about" onclick="toggleMobileMenu()" class="block font-semibold py-2 px-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">About Me</a>
+            <a href="#activities" onclick="toggleMobileMenu()" class="block font-semibold py-2 px-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">Activities</a>
+            <a href="#achievements" onclick="toggleMobileMenu()" class="block font-semibold py-2 px-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">Achievements</a>
+            <a href="#contact" onclick="toggleMobileMenu()" class="block font-semibold py-2 px-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">Contact</a>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section id="home" class="min-h-screen pt-32 pb-20 flex items-center justify-center px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center w-full">
+            <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-600 dark:text-indigo-400 text-xs font-bold tracking-wide uppercase">
+                    <span class="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></span>
+                    <span>Welcome to Anik's Official Portal</span>
+                </div>
+                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight">
+                    Hi, I'm <span class="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 gradient-text">Anik</span>
+                </h1>
+                <p class="text-lg sm:text-xl font-medium text-slate-600 dark:text-slate-400 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                    Founder & Educator of Anik's Education Point , Chairman of Skillora Ed-Tech • Ed-Tech Visionary
+                </p>
+                <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-4">
+                    <a href="#activities" class="px-7 py-3.5 rounded-xl font-bold text-sm text-white bg-gradient-to-r from-indigo-600 to-purple-600 shadow-xl shadow-indigo-500/30 hover:scale-105 transition-all flex items-center space-x-2">
+                        <span>Explore Activities</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                    <a href="#contact" class="px-7 py-3.5 rounded-xl font-bold text-sm glass border border-slate-300 dark:border-slate-700 hover:border-indigo-500 hover:scale-105 transition-all">
+                        Get in Touch
+                    </a>
+                </div>
+                <div class="pt-6 flex items-center justify-center lg:justify-start space-x-6 text-slate-500 dark:text-slate-400">
+                    <a href="tel:01817319646" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"><i class="fa-solid fa-phone text-lg mr-2"></i>01817319646</a>
+                    <a href="mailto:iamanik__@gmail.com" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"><i class="fa-solid fa-envelope text-lg mr-2"></i>iamanik__@gmail.com</a>
+                </div>
+            </div>
+
+            <div class="lg:col-span-5 flex justify-center">
+                <div class="relative w-72 h-72 sm:w-85 sm:h-85">
+                    <div class="absolute inset-0 rounded-full bg-gradient-to-tr from-indigo-600 via-purple-600 to-pink-500 animate-spin" style="animation-duration: 20s;"></div>
+                    <div class="absolute inset-2 rounded-full bg-slate-900 overflow-hidden shadow-2xl border-4 border-white/20 dark:border-slate-800">
+                        <img src="./ANIK.png" alt="Anik" class="w-full h-full object-cover object-top hover:scale-110 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80'">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT ME SECTION -->
+    <section id="about" class="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="text-center space-y-4 mb-16">
+            <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">About <span class="bg-gradient-to-r from-indigo-600 to-pink-600 gradient-text">Anik Only</span></h2>
+            <p class="text-slate-600 dark:text-slate-400 max-w-xl mx-auto font-medium">Passionate educator, ed-tech pioneer, and visionary building the future of digital learning.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="glass p-8 rounded-3xl border border-slate-200/50 dark:border-slate-800/50 shadow-xl relative overflow-hidden group hover:border-indigo-500/50 transition-all">
+                <div class="w-14 h-14 rounded-2xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Education & Leadership</h3>
+                <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                    Founder & Director of Anik's Education Point, empowering HSC and Pre-Medical students with top-tier academic guidance and curated question banks.
+                </p>
+            </div>
+
+            <div class="glass p-8 rounded-3xl border border-slate-200/50 dark:border-slate-800/50 shadow-xl relative overflow-hidden group hover:border-purple-500/50 transition-all">
+                <div class="w-14 h-14 rounded-2xl bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">
+                    <i class="fa-solid fa-rocket"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Ed-Tech Vision</h3>
+                <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                    Chairman of Skillora Ed-Tech, leading innovative educational technology projects and modern learning solutions across Bangladesh.
+                </p>
+            </div>
+
+            <div class="glass p-8 rounded-3xl border border-slate-200/50 dark:border-slate-800/50 shadow-xl relative overflow-hidden group hover:border-pink-500/50 transition-all">
+                <div class="w-14 h-14 rounded-2xl bg-pink-500/10 text-pink-600 dark:text-pink-400 flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">
+                    <i class="fa-solid fa-bullseye"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Mission & Core Values</h3>
+                <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                    Dedicated to transforming complex biological and scientific concepts into engaging, high-yield study materials and interactive tests.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ACTIVITIES SECTION -->
+    <section id="activities" class="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="text-center space-y-4 mb-16">
+            <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">My <span class="bg-gradient-to-r from-indigo-600 to-pink-600 gradient-text">Activities</span></h2>
+            <p class="text-slate-600 dark:text-slate-400 max-w-xl mx-auto font-medium">Explore key initiatives, academic programs, and ventures driven by Anik Only.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="glass rounded-3xl overflow-hidden border border-slate-200/50 dark:border-slate-800/50 shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between">
+                <div class="p-8 space-y-4">
+                    <div class="w-12 h-12 rounded-xl bg-indigo-600 text-white flex items-center justify-center text-xl font-bold">01</div>
+                    <h3 class="text-xl font-bold">Anik's Education Point</h3>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                        Coaching and guiding HSC & Pre-Medical aspirants with specialized lectures in Botany, Zoology, Chemistry, and English grammar.
+                    </p>
+                </div>
+                <div class="px-8 pb-8">
+                    <button onclick="openModal('Anik\'s Education Point', 'Running specialized academic coaching programs for HSC and medical admission candidates with expert lecture capsules and high-yield MCQ banks.')" class="w-full py-3 rounded-xl bg-indigo-50 dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 font-bold text-sm hover:bg-indigo-600 hover:text-white transition-colors">
+                        Learn More
+                    </button>
+                </div>
+            </div>
+
+            <div class="glass rounded-3xl overflow-hidden border border-slate-200/50 dark:border-slate-800/50 shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between">
+                <div class="p-8 space-y-4">
+                    <div class="w-12 h-12 rounded-xl bg-purple-600 text-white flex items-center justify-center text-xl font-bold">02</div>
+                    <h3 class="text-xl font-bold">Skillora Ed-Tech</h3>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                        Leading technology-driven educational ventures as Chairman, building modern web platforms and structured learning ecosystems.
+                    </p>
+                </div>
+                <div class="px-8 pb-8">
+                    <button onclick="openModal('Skillora Ed-Tech', 'Pioneering next-gen educational technology solutions in Bangladesh as Chairman, transforming how students access digital education.')" class="w-full py-3 rounded-xl bg-indigo-50 dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 font-bold text-sm hover:bg-indigo-600 hover:text-white transition-colors">
+                        Learn More
+                    </button>
+                </div>
+            </div>
+
+            <div class="glass rounded-3xl overflow-hidden border border-slate-200/50 dark:border-slate-800/50 shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between">
+                <div class="p-8 space-y-4">
+                    <div class="w-12 h-12 rounded-xl bg-pink-600 text-white flex items-center justify-center text-xl font-bold">03</div>
+                    <h3 class="text-xl font-bold">Content & Study Capsules</h3>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                        Authoring high-yield academic note summaries, test banks, and interactive revision materials for science students.
+                    </p>
+                </div>
+                <div class="px-8 pb-8">
+                    <button onclick="openModal('Content & Study Capsules', 'Developing rigorous academic note sets, English suffix & prefix guides, and chapter-wise multiple-choice question banks under Anik Sir.')" class="w-full py-3 rounded-xl bg-indigo-50 dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 font-bold text-sm hover:bg-indigo-600 hover:text-white transition-colors">
+                        Learn More
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ACHIEVEMENTS SECTION -->
+    <section id="achievements" class="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="text-center space-y-4 mb-16">
+            <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Key <span class="bg-gradient-to-r from-indigo-600 to-pink-600 gradient-text">Achievements</span></h2>
+            <p class="text-slate-600 dark:text-slate-400 max-w-xl mx-auto font-medium">Milestones and recognitions in education and leadership by Anik Only.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="glass p-8 rounded-3xl border border-slate-200/50 dark:border-slate-800/50 shadow-xl">
+                <div class="text-indigo-600 dark:text-indigo-400 text-3xl font-extrabold mb-3">500+</div>
+                <h3 class="text-xl font-bold mb-2">Students Mentored</h3>
+                <p class="text-slate-600 dark:text-slate-400 text-sm">Successfully coaching HSC and medical admission candidates across Chattogram and beyond.</p>
+            </div>
+
+            <div class="glass p-8 rounded-3xl border border-slate-200/50 dark:border-slate-800/50 shadow-xl">
+                <div class="text-purple-600 dark:text-purple-400 text-3xl font-extrabold mb-3">Skillora</div>
+                <h3 class="text-xl font-bold mb-2">Ed-Tech Leadership</h3>
+                <p class="text-slate-600 dark:text-slate-400 text-sm">Serving as Chairman of Skillora Ed-Tech, spearheading innovative digital academic platforms.</p>
+            </div>
+
+            <div class="glass p-8 rounded-3xl border border-slate-200/50 dark:border-slate-800/50 shadow-xl">
+                <div class="text-pink-600 dark:text-pink-400 text-3xl font-extrabold mb-3">100%</div>
+                <h3 class="text-xl font-bold mb-2">Dedication & Quality</h3>
+                <p class="text-slate-600 dark:text-slate-400 text-sm">Creating high-yield lecture capsules, MCQ banks, and comprehensive academic notes.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="text-center space-y-4 mb-16">
+            <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Let's <span class="bg-gradient-to-r from-indigo-600 to-pink-600 gradient-text">Connect</span></h2>
+            <p class="text-slate-600 dark:text-slate-400 max-w-xl mx-auto font-medium">Reach out for academic inquiries, collaborations, or mentorship with Anik Only.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <div class="glass p-8 sm:p-10 rounded-3xl border border-slate-200/50 dark:border-slate-800/50 shadow-xl space-y-8">
+                <h3 class="text-2xl font-bold">Contact Information</h3>
+                
+                <div class="flex items-start space-x-4">
+                    <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-xl shrink-0">
+                        <i class="fa-solid fa-location-dot"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-900 dark:text-slate-100">Office Location</h4>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm mt-1">127/A, Secure dovash ark, alkoron, new market chattogram</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start space-x-4">
+                    <div class="w-12 h-12 rounded-2xl bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center text-xl shrink-0">
+                        <i class="fa-solid fa-envelope"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-900 dark:text-slate-100">Email Address</h4>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm mt-1">iamanik__@gmail.com</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start space-x-4">
+                    <div class="w-12 h-12 rounded-2xl bg-pink-500/10 text-pink-600 dark:text-pink-400 flex items-center justify-center text-xl shrink-0">
+                        <i class="fa-solid fa-phone"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-900 dark:text-slate-100">Phone Number</h4>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm mt-1">01817319646</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass p-8 sm:p-10 rounded-3xl border border-slate-200/50 dark:border-slate-800/50 shadow-xl">
+                <form onsubmit="handleFormSubmit(event)" class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-bold mb-2">Your Name</label>
+                        <input type="text" required class="w-full px-4 py-3 rounded-xl bg-white/50 dark:bg-slate-900/50 border border-slate-300 dark:border-slate-700 focus:outline-none focus:border-indigo-600 text-sm" placeholder="Enter your full name">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold mb-2">Your Email</label>
+                        <input type="email" required class="w-full px-4 py-3 rounded-xl bg-white/50 dark:bg-slate-900/50 border border-slate-300 dark:border-slate-700 focus:outline-none focus:border-indigo-600 text-sm" placeholder="Enter your email">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold mb-2">Message</label>
+                        <textarea rows="4" required class="w-full px-4 py-3 rounded-xl bg-white/50 dark:bg-slate-900/50 border border-slate-300 dark:border-slate-700 focus:outline-none focus:border-indigo-600 text-sm" placeholder="Write your message here..."></textarea>
+                    </div>
+                    <button type="submit" class="w-full py-3.5 rounded-xl font-bold text-sm text-white bg-gradient-to-r from-indigo-600 to-purple-600 shadow-lg shadow-indigo-500/25 hover:scale-[1.01] active:scale-[0.99] transition-all">
+                        Send Message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="py-12 border-t border-slate-200/50 dark:border-slate-800/50 glass">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div class="flex items-center space-x-3">
+                <div class="w-9 h-9 rounded-xl bg-slate-900 overflow-hidden flex items-center justify-center">
+                    <img src="./ANIK.png" alt="Anik" class="w-full h-full object-cover object-top">
+                </div>
+                <span class="text-lg font-bold">Anik Only</span>
+            </div>
+            <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">
+                © 2026 iamanik. All Rights Reserved.
+            </p>
+        </div>
+    </footer>
+
+    <!-- MODAL POPUP -->
+    <div id="infoModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/60 backdrop-blur-sm px-4">
+        <div class="glass max-w-lg w-full p-8 rounded-3xl border border-slate-300 dark:border-slate-700 shadow-2xl relative space-y-4">
+            <h3 id="modalTitle" class="text-2xl font-bold"></h3>
+            <p id="modalDesc" class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed"></p>
+            <div class="pt-4 flex justify-end">
+                <button onclick="closeModal()" class="px-6 py-2.5 rounded-xl bg-indigo-600 text-white font-bold text-sm hover:bg-indigo-700 transition-colors">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 translate-y-20 opacity-0 transition-all duration-300 px-6 py-3 rounded-2xl bg-indigo-600 text-white font-bold text-sm shadow-2xl">
+        Action successful!
+    </div>
+
+    <script>
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Modal Controls
+        function openModal(title, desc) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalDesc').innerText = desc;
+            const modal = document.getElementById('infoModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('infoModal');
+            modal.classList.remove('flex');
+            modal.classList.add('hidden');
+        }
+
+        // Form Submit Handler
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            showToast('Message sent successfully!');
+            e.target.reset();
+        }
+
+        // Toast Notification
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        // 4 Color Palettes & Theme Switcher
+        const themes = [
+            { name: 'Cyber Aurora', bg1: '#8b5cf6', bg2: '#6366f1', bg3: '#ec4899', isDark: true },
+            { name: 'Sunset Neon', bg1: '#f97316', bg2: '#e11d48', bg3: '#a855f7', isDark: true },
+            { name: 'Emerald Matrix', bg1: '#10b981', bg2: '#06b6d4', bg3: '#3b82f6', isDark: true },
+            { name: 'Royal Light', bg1: '#6366f1', bg2: '#3b82f6', bg3: '#06b6d4', isDark: false }
+        ];
+        let currentThemeIndex = 0;
+
+        function cycleTheme() {
+            currentThemeIndex = (currentThemeIndex + 1) % themes.length;
+            const t = themes[currentThemeIndex];
+            
+            document.getElementById('themeName').innerText = t.name;
+            document.getElementById('blob1').style.backgroundColor = t.bg1;
+            document.getElementById('blob2').style.backgroundColor = t.bg2;
+            document.getElementById('blob3').style.backgroundColor = t.bg3;
+
+            const body = document.getElementById('bodyTheme');
+            if (t.isDark) {
+                body.classList.add('dark');
+                body.classList.remove('bg-white', 'text-slate-900');
+            } else {
+                body.classList.remove('dark');
+                body.classList.add('bg-white', 'text-slate-900');
+            }
+            showToast('Theme changed to ' + t.name);
+        }
+    </script>
+</body>
+</html>
